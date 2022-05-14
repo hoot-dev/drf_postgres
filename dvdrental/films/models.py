@@ -54,6 +54,8 @@ class Film(models.Model):
     special_features = ArrayField(models.CharField(max_length=100, blank=True, null=True))
     # Full text search field (tsvector) in postgres - https://pganalyze.com/blog/full-text-search-django-postgres
     fulltext = SearchVectorField(null=True)
+    actors = models.ManyToManyField(Actor, through='FilmActor', related_name='films')
+    categories = models.ManyToManyField(Category, through='FilmCategory', related_name='films')
 
     class Meta:
         db_table = 'film'
@@ -65,7 +67,7 @@ class Film(models.Model):
 
 
 class FilmActor(models.Model):
-    actor = models.OneToOneField(Actor, models.CASCADE, primary_key=True)
+    actor = models.ForeignKey(Actor, models.CASCADE)
     film = models.ForeignKey(Film, models.CASCADE)
     last_update = models.DateTimeField()
 
@@ -78,7 +80,7 @@ class FilmActor(models.Model):
 
 
 class FilmCategory(models.Model):
-    film = models.OneToOneField(Film, models.CASCADE, primary_key=True)
+    film = models.ForeignKey(Film, models.CASCADE)
     category = models.ForeignKey(Category, models.CASCADE)
     last_update = models.DateTimeField()
 

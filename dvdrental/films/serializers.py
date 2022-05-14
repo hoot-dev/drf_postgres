@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Film, FilmActor, FilmCategory, Actor, Language, Category
+from .models import Film, Language
 
 
 class LanguageSerializer(serializers.ModelSerializer):
