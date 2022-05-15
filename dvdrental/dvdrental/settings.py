@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'api',
     'customers',
     'films',
-    'stores',
+    'rentals',
 ]
 
 MIDDLEWARE = [
