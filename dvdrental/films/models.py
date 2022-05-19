@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 from django.contrib.postgres.search import SearchVectorField
@@ -9,7 +11,7 @@ class Actor(models.Model):
     actor_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=45)
     last_name = models.CharField(max_length=45)
-    last_update = models.DateTimeField()
+    last_update = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'actor'
@@ -21,7 +23,7 @@ class Actor(models.Model):
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
-    last_update = models.DateTimeField()
+    last_update = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'category'
@@ -48,7 +50,7 @@ class Film(models.Model):
     length = models.SmallIntegerField(blank=True, null=True)
     replacement_cost = models.DecimalField(max_digits=5, decimal_places=2)
     rating = models.CharField(max_length=6, blank=True, null=True, choices=ratings)
-    last_update = models.DateTimeField()
+    last_update = models.DateTimeField(auto_now=True)
     # Postgres ArrayField - https://docs.djangoproject.com/en/3.2/ref/contrib/postgres/fields/
     # This can basically be used as "tags" for this model
     special_features = ArrayField(models.CharField(max_length=100, blank=True, null=True))
@@ -69,7 +71,7 @@ class Film(models.Model):
 class FilmActor(models.Model):
     actor = models.ForeignKey(Actor, models.CASCADE)
     film = models.ForeignKey(Film, models.CASCADE)
-    last_update = models.DateTimeField()
+    last_update = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'film_actor'
@@ -82,7 +84,7 @@ class FilmActor(models.Model):
 class FilmCategory(models.Model):
     film = models.ForeignKey(Film, models.CASCADE)
     category = models.ForeignKey(Category, models.CASCADE)
-    last_update = models.DateTimeField()
+    last_update = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'film_category'
@@ -95,7 +97,7 @@ class FilmCategory(models.Model):
 class Language(models.Model):
     language_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
-    last_update = models.DateTimeField()
+    last_update = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'language'
